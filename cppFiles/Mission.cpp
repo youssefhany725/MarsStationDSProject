@@ -1,14 +1,15 @@
 #include "..\hFiles\Mission.h"
-Mission::Mission(missiontype a,int ed, int id, int tloc, int mdur, int sig)
+Mission::Mission(missiontype a,int ed, int c, int d, int e, int f, int w1)
 {
 	TYP = a;
-	ID = id;
+	ID = c;
 	Rassigned = nullptr;
 	CD = -1;
 	ED = ed;
-	TLOC = tloc;
-	MDUR = mdur;
-	SIG = sig;
+	TLOC = d;
+	MDUR = e;
+	SIG = f;
+	WD = w1;
 }
 void Mission::Assign(Rover* R,int cd)
 {
@@ -19,22 +20,30 @@ int Mission::getcmpday()
 {
 	return CD;
 }
-Rover* Mission::getRover()
-{
-	return Rassigned;
-}
-missiontype Mission::gettype()
+int Mission::gettype()
 {
 	return TYP;
 }
 int Mission::getPkey() {
 	return 0;
 }
-int Mission::getid()
-{
-	return ID;
-}
 int Mission::getMDUR()
 {
 	return MDUR;
 }
+
+void Mission::setwatingday(int w2)
+{
+	WD = w2-getcmpday();
+}
+
+int Mission::getwaitingday()
+{
+	return WD;
+}
+
+void Mission::getRover(Rover*&r)
+{
+	r = Rassigned;
+}
+
