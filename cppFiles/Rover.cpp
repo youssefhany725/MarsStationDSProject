@@ -6,8 +6,7 @@ Rover::Rover(rovertype rt, int id) {
 }
 
 int Rover::missionsToCheckup = 0, Rover::polar_checkupDuration = 0,
-Rover::emergency_checkupDuration = 0, Rover::polar_speed = 0, Rover::emergency_speed = 0;
-
+Rover::emergency_checkupDuration = 0, Rover::polar_speed = 0, Rover::emergency_speed = 0; 
 void Rover::setMissionsToCheckup(int n) {
 	missionsToCheckup = n;
 }
@@ -79,4 +78,18 @@ int Rover::getCheckupEndDate() {
 
 void Rover::setCheckupEndDate(int n) {
 	checkupEndDate = n;
+
 }
+void Rover::setcheckuptime()
+{
+	time++;
+}
+bool Rover::getcheckuptime()
+{
+	if(time == 0)
+	{
+		return false;
+	}
+	return (time % getMissionsToCheckup()  == 0);
+}
+
