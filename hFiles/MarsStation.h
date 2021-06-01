@@ -15,18 +15,18 @@ private:
 	LinkedQueue<Mission*> PMissionList;
 	priorityqueue<Mission*> EMissionList;
 	priorityqueue<Mission*> InExMissions;
+	LinkedQueue<Mission*> CMissions;
+	LinkedQueue<Rover*>checkE;
+	LinkedQueue<Rover*>checkP;
 	LinkedQueue<Rover*> PRoverList;
 	LinkedQueue<Rover*> ERoverList;
 	priorityqueue<Rover*> InExRovers;
-	LinkedQueue<Mission*>CompletedMissions;
 public:
 	MarsStation();
 	void StationInput(LinkedQueue<Event>*);
 	void MExecute();
 	void Assign();
-	void Interactive();
-	void Finish();
-	void Endday();
+	void Complete();
 	void AddEvent(missiontype missionType, int eventDay, int ID, int targetLocation, int missionDuration, int significance);
 	void AddRover(rovertype roverType, int ID);
 	//void AddRover(rovertype roverType, int checkupDuration, int speed);
@@ -35,5 +35,7 @@ public:
 	void setEmergency_checkupDuration(int n);
 	void setPolar_speed(int n);
 	void setEmergency_speed(int n);
+	void incrimintcurrentday();
 };
+
 
