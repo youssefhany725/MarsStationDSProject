@@ -1,12 +1,10 @@
 #pragma once
 #include"Defs.h"
-
 class Rover
 {
 	static int missionsToCheckup, polar_checkupDuration, emergency_checkupDuration, polar_speed, emergency_speed;
 	int ID, checkupEndDate;
 	rovertype roverType;
-	int time = 0;
 public:
 	Rover(rovertype rt, int id);
 
@@ -29,7 +27,5 @@ public:
 	int getcheckupdays();
 	int getCheckupEndDate();
 	void setCheckupEndDate(int n);
-	void setcheckuptime();
-	bool getcheckuptime();
 };
 
