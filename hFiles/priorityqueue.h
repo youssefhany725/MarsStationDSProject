@@ -8,7 +8,7 @@ class priorityqueue:public LinkedQueue<T>
 	int t;
 	priorityNode <T>* Head;
 	priorityNode <T>* rare;
-
+	int Count;
 
 public:
 	bool isEmpty() {
@@ -18,7 +18,7 @@ public:
 
 		rare = nullptr;
 		Head = nullptr;
-
+		Count = 0;
 
 	}
 	bool enqueue(const T& newitem, int sig) {
@@ -49,6 +49,7 @@ public:
 			itrator->setNext(newNodePtr);
 			rare = newNodePtr;
 		}
+		Count++;
 		return true;
 	}
 	/*bool enqueue(priorityNode<T>* newnode, int sig) {
@@ -92,6 +93,7 @@ public:
 		if (Deletednode == rare)
 			rare = nullptr;
 		delete Deletednode;
+		Count--;
 		return true;
 	}
 	/*bool dequeue(priorityNode<T>*newnode)
