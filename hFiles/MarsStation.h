@@ -17,7 +17,7 @@ private:
 	priorityqueue<Mission*> InExMissions;
 	LinkedQueue<Rover*> PRoverList;
 	LinkedQueue<Rover*> ERoverList;
-	priorityqueue<Rover*> InExRovers;
+	//priorityqueue<Rover*> InExRovers;
 	LinkedQueue<Mission*>CompletedMissions;
 public:
 	MarsStation();
