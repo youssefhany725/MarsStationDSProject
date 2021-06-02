@@ -208,8 +208,8 @@ LinkedQueue<T>::LinkedQueue(const LinkedQueue<T> & LQ)
 	if (!NodePtr) //LQ is empty
 	{
 		frontPtr = backPtr = nullptr;
-		return;
 		Count = 0;
+		return;
 	}
 
 	//insert the first node

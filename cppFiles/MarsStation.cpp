@@ -76,25 +76,33 @@ void MarsStation::Interactive()
 {
 	cout << "CurrentDay: " << CurrentDay << endl;
 	string s;
-	s = "Waiting Missions: ";
-	UserI.MPrintDef(EMissionList, '[', ']',s);
-	UserI.MPrintDef(PMissionList, '(', ')');
-	//inEx
 	Mission* M;
+	Rover* R;
+	//-------------------------Launch------------------------------
+	s = "Waiting Missions: ";
+	LinkedQueue<Mission*>templist1(EMissionList);
+	LinkedQueue<Mission*>templist2(PMissionList);
+	while (templist2.dequeue(M)) { templist1.enqueue(M); }
+	UserI.PrintDefM(templist1,s);
+	//-------------------------Waiting----------------------------
+	s = "In-Execution Missions/Rovers: ";
 	LinkedQueue<Mission*>temp;
 	while (InExMissions.dequeue(M))
 		temp.enqueue(M);
 	LinkedQueue<Mission*> temp2(temp);
 	while (temp.dequeue(M))
 		InExMissions.enqueue(M,-M->getcmpday());
-
-	s = "In-Execution Missions/Rovers: ";
 	UserI.PrintInex(temp2, s);
+	//-------------------------Execution----------------------------
 	s = "Available Rovers: ";
-	UserI.RPrintDef(ERoverList, '[', ']', s);
-	UserI.RPrintDef(PRoverList, '(', ')');
+	LinkedQueue<Rover*>templist3(ERoverList);
+	LinkedQueue<Rover*>templist4(PRoverList);
+	while (templist4.dequeue(R)) { templist3.enqueue(R); }
+	UserI.PrintDefR(templist3, s);
+	//------------------------AvailableRovers------------------------
 	s = "Completed Missions: ";
-	UserI.PrintComp(CompletedMissions, s);
+	UserI.PrintDefM(CompletedMissions, s);
+	//------------------------CompletedMissions---------------------
 }
 void MarsStation::Finish()
 {

@@ -60,53 +60,45 @@ void UI::input(MarsStation* ms)
 		inputFile.ignore(128, '\n');
 	}
 }
-void UI::MPrintDef(LinkedQueue<Mission*> list,char obrkt,char cbrkt, string txt)
-{
-	Mission *M;
-	string end;
-	if (txt != "")
-	{
-		end = " ";
-		cout << txt;
-	}
-	else { end = "\n-------------------------------\n"; }
-	cout << obrkt;
-	while (list.dequeue(M))
-	{
-		cout << M->getid();
-		if (!list.isEmpty())
-		{
-			cout << ',';
-		}
-	}
-	cout << cbrkt << end;
-}
-void UI::RPrintDef(LinkedQueue<Rover*> list, char obrkt, char cbrkt,string txt)
+void UI::PrintDefR(LinkedQueue<Rover*> list, string txt)
 {
 	Rover* R;
-	string end;
-	if (txt != "")
-	{
-		end = " ";
-		cout << txt;
-	}
-	else { end = "\n-------------------------------\n"; }
-	cout << obrkt;
+	string comma = "";
+	LinkedQueue<Rover*> temp;
+	cout << list.getCount() << " ";
+	cout << txt;
+	cout << '[';
 	while (list.dequeue(R))
 	{
-		cout << R->getid();
-		if (!list.isEmpty())
+		if (R->getrovertype() == emergency)
 		{
-			cout << ',';
+			cout << comma;
+			cout << R->getid();
+			comma = ",";
+		}
+		else
+		{
+			temp.enqueue(R);
 		}
 	}
-	cout << cbrkt << end;
+	cout << ']' << " ";
+	cout << '(';
+	while (temp.dequeue(R))
+	{
+		cout << R->getid();
+		if (!temp.isEmpty())
+		{
+			cout << ",";
+		}
+	}
+	cout << ')' << "\n-------------------------------\n";
 }
 void UI::PrintInex(LinkedQueue<Mission*> list,string txt)
 {
 	Mission* M;
 	string comma="";
 	LinkedQueue<Mission*> temp;
+	cout << list.getCount() << " ";
 	cout << txt;
 	cout << '[';
 	while (list.dequeue(M))
@@ -134,11 +126,12 @@ void UI::PrintInex(LinkedQueue<Mission*> list,string txt)
 	}
 	cout << ')' <<"\n-------------------------------\n";
 }
-void UI::PrintComp(LinkedQueue<Mission*> list, string txt)
+void UI::PrintDefM(LinkedQueue<Mission*> list, string txt)
 {
 	Mission* M;
 	string comma = "";
 	LinkedQueue<Mission*> temp;
+	cout << list.getCount() << " ";
 	cout << txt;
 	cout << '[';
 	while (list.dequeue(M))
