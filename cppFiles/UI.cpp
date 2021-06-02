@@ -1,5 +1,5 @@
-#include "UI.h"
-#include "MarsStation.h"
+#include "../hFiles/UI.h"
+#include "../hFiles/MarsStation.h"
 ifstream UI::ReadActionParameters()
 {
 	ifstream inputFile;

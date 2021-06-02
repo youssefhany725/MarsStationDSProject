@@ -14,6 +14,7 @@ private:
 
 	Node<T>* backPtr;
 	Node<T>* frontPtr;
+	int Count;
 public:
 	LinkedQueue();
 	bool isEmpty() const;
@@ -24,7 +25,8 @@ public:
 	bool peek(T& frntEntry)  const;
 	//bool peek(Node<T>* newnode);
 	~LinkedQueue();
-
+	int getCount();
+	void setCount(int n);
 	//copy constructor
 	LinkedQueue(const LinkedQueue<T> & LQ);
 };
@@ -41,7 +43,7 @@ LinkedQueue<T>::LinkedQueue()
 {
 	backPtr = nullptr;
 	frontPtr = nullptr;
-
+	Count = 0;
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -78,6 +80,7 @@ bool LinkedQueue<T>::enqueue(const T& newEntry)
 		backPtr->setNext(newNodePtr); // The queue was not empty
 
 	backPtr = newNodePtr; // New node is the last node now
+	Count++;
 	return true;
 } // end enqueue
 //template<typename T>
@@ -118,7 +121,7 @@ bool LinkedQueue<T>::dequeue(T& frntEntry)
 
 	// Free memory reserved for the dequeued node
 	delete nodeToDeletePtr;
-
+	Count--;
 	return true;
 
 }
@@ -185,6 +188,18 @@ copy constructor is provided
 Input: LinkedQueue<T>: The Queue to be copied
 Output: none
 */
+template <typename T>
+int LinkedQueue<T>::getCount()
+{
+	return Count;
+}
+
+template <typename T>
+void LinkedQueue<T>::setCount(int n)
+{
+	Count = n;
+}
+
 
 template <typename T>
 LinkedQueue<T>::LinkedQueue(const LinkedQueue<T> & LQ)
@@ -194,13 +209,14 @@ LinkedQueue<T>::LinkedQueue(const LinkedQueue<T> & LQ)
 	{
 		frontPtr = backPtr = nullptr;
 		return;
+		Count = 0;
 	}
 
 	//insert the first node
 	Node<T>* ptr = new Node<T>(NodePtr->getItem());
 	frontPtr = backPtr = ptr;
 	NodePtr = NodePtr->getNext();
-
+	Count = 1;
 	//insert remaining nodes
 	while (NodePtr)
 	{
@@ -208,6 +224,7 @@ LinkedQueue<T>::LinkedQueue(const LinkedQueue<T> & LQ)
 		backPtr->setNext(ptr);
 		backPtr = ptr;
 		NodePtr = NodePtr->getNext();
+		Count++;
 	}
 }
 
