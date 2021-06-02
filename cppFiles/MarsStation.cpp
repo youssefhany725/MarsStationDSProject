@@ -41,7 +41,7 @@ void MarsStation::Assign()
 			EMissionList.dequeue(M);
 			M->Assign(R,CurrentDay);
 			InExMissions.enqueue(M,-M->getcmpday());
-			InExRovers.enqueue(R, -M->getcmpday());
+			//InExRovers.enqueue(R, -M->getcmpday());
 		}
 		else if (!PRoverList.isEmpty())
 		{
@@ -49,7 +49,7 @@ void MarsStation::Assign()
 			EMissionList.dequeue(M);
 			M->Assign(R,CurrentDay);
 			InExMissions.enqueue(M,-M->getcmpday());
-			InExRovers.enqueue(R,-M->getcmpday());
+			//InExRovers.enqueue(R,-M->getcmpday());
 		}
 		else
 		{
@@ -64,7 +64,7 @@ void MarsStation::Assign()
 			PMissionList.dequeue(M);
 			M->Assign(R, CurrentDay);
 			InExMissions.enqueue(M, -M->getcmpday());
-			InExRovers.enqueue(R, -M->getcmpday());
+			//InExRovers.enqueue(R, -M->getcmpday());
 		}
 		else
 		{
