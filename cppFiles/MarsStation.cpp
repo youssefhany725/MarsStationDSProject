@@ -98,16 +98,49 @@ void MarsStation::Interactive()
 }
 void MarsStation::Finish()
 {
-	Mission* M;
-	while (InExMissions.peek(M))
+	Mission* m;
+	Rover* R;
+	while(InExMissions.peek(m)&&m->getcmpday()==CurrentDay)
 	{
-		if (M->getcmpday() == CurrentDay)
+		InExMissions.dequeue(m);
+		CompletedMissions.enqueue(m);
+	        R = m->getRover();
+		R->setcheckuptime();
+		if (R->getcheckuptime())
 		{
-			InExMissions.dequeue(M);
-			CompletedMissions.enqueue(M);
+		if(R->getrovertype()==polarrover)
+		{
+			checkP.enqueue(R);
+			R->setCheckupEndDate(CurrentDay+R->getcheckupdays());
 		}
-		else { break; }
+		else
+		{
+			checkE.enqueue(R);
+			R->setCheckupEndDate(CurrentDay + R->getcheckupdays());
+		}
+
+		}
+		else
+		{
+			if (R->getrovertype() == polarrover)
+			{
+				PRoverList.enqueue(R);
+			}
+			else
+			{
+				ERoverList.enqueue(R);
+			}
+		}
 	}
+	while(checkP.peek(R)&&R->getCheckupEndDate()==CurrentDay)
+	{
+		PRoverList.enqueue(R);
+	}	
+	while (checkE.peek(R) && R->getCheckupEndDate() == CurrentDay)
+	{
+		ERoverList.enqueue(R);
+	}
+
 }
 void MarsStation::Endday()
 {
