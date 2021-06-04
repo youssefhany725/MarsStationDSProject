@@ -121,4 +121,12 @@ public:
 		newnode = Head;
 		return true;
 	}*/
+	int getCount()
+	{
+		return Count;
+	}
+	void setCount(int n)
+	{
+		Count = n;
+	}
 };
