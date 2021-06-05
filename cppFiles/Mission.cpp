@@ -15,7 +15,7 @@ void Mission::Assign(Rover* R,int cd)
 {
 	Rassigned = R;
 	CD = cd + MDUR + ((TLOC/R->getspeed()) / 25);
-	WD = CD - ED;
+	WD = cd - ED;
 }
 int Mission::getcmpday()
 {
