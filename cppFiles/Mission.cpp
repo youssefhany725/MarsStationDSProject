@@ -9,11 +9,13 @@ Mission::Mission(missiontype a,int ed, int id, int tloc, int mdur, int sig)
 	TLOC = tloc;
 	MDUR = mdur;
 	SIG = sig;
+	WD = 0;
 }
 void Mission::Assign(Rover* R,int cd)
 {
 	Rassigned = R;
 	CD = cd + MDUR + ((TLOC/R->getspeed()) / 25);
+	WD = CD - ED;
 }
 int Mission::getcmpday()
 {
