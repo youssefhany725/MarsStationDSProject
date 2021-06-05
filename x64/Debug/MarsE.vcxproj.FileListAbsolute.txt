@@ -1,3 +1,0 @@
-C:\Users\TOP\Documents\GitHub\MarsStationDSProject\x64\Debug\MarsE.exe
-C:\Users\TOP\Documents\GitHub\MarsStationDSProject\x64\Debug\MarsE.pdb
-C:\Users\noure\Documents\GitHub\MarsStationDSProject\x64\Debug\MarsE.exe
