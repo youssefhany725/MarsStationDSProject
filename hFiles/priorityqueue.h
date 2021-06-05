@@ -3,7 +3,7 @@
 #include "linkedqueue.h"
 
 template <typename T>
-class priorityqueue
+class priorityqueue /*:public LinkedQueue<T>*/
 {
 
 	priorityNode <T>* Head = nullptr;

@@ -86,13 +86,14 @@ void MarsStation::Interactive()
 	UserI.PrintDefM(templist1,s);
 	//-------------------------Waiting----------------------------
 	s = "In-Execution Missions/Rovers: ";
-	LinkedQueue<Mission*>temp;
-	while (InExMissions.dequeue(M))
+	priorityqueue<Mission*>temp;
+	temp = InExMissions;
+	/*while (InExMissions.dequeue(M))
 		temp.enqueue(M);
 	LinkedQueue<Mission*> temp2(temp);
 	while (temp.dequeue(M))
-		InExMissions.enqueue(M,-M->getcmpday());
-	UserI.PrintInex(temp2, s);
+		InExMissions.enqueue(M,-M->getcmpday());*/
+	UserI.PrintInex(temp, s);
 	//-------------------------Execution----------------------------
 	s = "Available Rovers: ";
 	LinkedQueue<Rover*>templist3(ERoverList);
@@ -100,6 +101,11 @@ void MarsStation::Interactive()
 	while (templist4.dequeue(R)) { templist3.enqueue(R); }
 	UserI.PrintDefR(templist3, s);
 	//------------------------AvailableRovers------------------------
+	s = "In-Checkup Rovers: ";
+	priorityqueue<Rover*> temp2=Checkup;
+	LinkedQueue<Rover*> temp3(temp2);
+	UserI.PrintDefR(temp3, s);
+	//------------------------CheckupRovers--------------------------
 	s = "Completed Missions: ";
 	UserI.PrintDefM(CompletedMissions, s);
 	//------------------------CompletedMissions---------------------
@@ -107,15 +113,31 @@ void MarsStation::Interactive()
 void MarsStation::Finish()
 {
 	Mission* M;
-	while (InExMissions.peek(M))
+	Rover* R;
+	while (InExMissions.peek(M) && M->getcmpday() == CurrentDay)
 	{
-		if (M->getcmpday() == CurrentDay)
+		InExMissions.dequeue(M);
+		CompletedMissions.enqueue(M);
+		R = M->getRover();
+		R->setcheckuptime();
+		if (R->getcheckuptime())
 		{
-			InExMissions.dequeue(M);
-			CompletedMissions.enqueue(M);
+			R->setCheckupEndDate(CurrentDay + R->getcheckupdays());
+			Checkup.enqueue(R,-R->getCheckupEndDate());
 		}
-		else { break; }
 	}
+	while (Checkup.peek(R) && R->getCheckupEndDate() == CurrentDay)
+	{
+		if (R->getrovertype() == emergencyrover)
+		{
+			ERoverList.enqueue(R);
+		}
+		else
+		{
+			PRoverList.enqueue(R);
+		}
+	}
+
 }
 void MarsStation::Endday()
 {
