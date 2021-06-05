@@ -5,7 +5,7 @@ class priorityNode
 {
 
 	T item;
-	int* significant;
+	int significant;
 	priorityNode<T>* next;
 public:
 
@@ -14,18 +14,18 @@ public:
 		next = nullptr;
 	}
 
-	priorityNode(T newItem, int& s)
+	priorityNode(T newItem, int s)
 	{
 		item = newItem;
 		next = nullptr;
-		significant = &s;
+		significant = s;
 
 	}
 	void setsignificant(int& s)
 	{
 		significant = &s;
 	}
-	int* getsignificant()
+	int getsignificant()
 	{
 		return significant;
 	}

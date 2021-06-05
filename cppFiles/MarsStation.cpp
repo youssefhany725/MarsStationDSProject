@@ -41,7 +41,7 @@ void MarsStation::Assign()
 			EMissionList.dequeue(M);
 			M->Assign(R,CurrentDay);
 			InExMissions.enqueue(M,-M->getcmpday());
-			InExRovers.enqueue(R, -M->getcmpday());
+			//InExRovers.enqueue(R, -M->getcmpday());
 		}
 		else if (!PRoverList.isEmpty())
 		{
@@ -49,7 +49,7 @@ void MarsStation::Assign()
 			EMissionList.dequeue(M);
 			M->Assign(R,CurrentDay);
 			InExMissions.enqueue(M,-M->getcmpday());
-			InExRovers.enqueue(R,-M->getcmpday());
+			//InExRovers.enqueue(R,-M->getcmpday());
 		}
 		else
 		{
@@ -64,7 +64,7 @@ void MarsStation::Assign()
 			PMissionList.dequeue(M);
 			M->Assign(R, CurrentDay);
 			InExMissions.enqueue(M, -M->getcmpday());
-			InExRovers.enqueue(R, -M->getcmpday());
+			//InExRovers.enqueue(R, -M->getcmpday());
 		}
 		else
 		{
@@ -76,69 +76,66 @@ void MarsStation::Interactive()
 {
 	cout << "CurrentDay: " << CurrentDay << endl;
 	string s;
-	s = "Waiting Missions: ";
-	UserI.MPrintDef(EMissionList, '[', ']',s);
-	UserI.MPrintDef(PMissionList, '(', ')');
-	//inEx
 	Mission* M;
-	LinkedQueue<Mission*>temp;
-	while (InExMissions.dequeue(M))
+	Rover* R;
+	//-------------------------Launch------------------------------
+	s = "Waiting Missions: ";
+	LinkedQueue<Mission*>templist1(EMissionList);
+	LinkedQueue<Mission*>templist2(PMissionList);
+	while (templist2.dequeue(M)) { templist1.enqueue(M); }
+	UserI.PrintDefM(templist1,s);
+	//-------------------------Waiting----------------------------
+	s = "In-Execution Missions/Rovers: ";
+	priorityqueue<Mission*>temp;
+	temp = InExMissions;
+	/*while (InExMissions.dequeue(M))
 		temp.enqueue(M);
 	LinkedQueue<Mission*> temp2(temp);
 	while (temp.dequeue(M))
-		InExMissions.enqueue(M,-M->getcmpday());
-
-	s = "In-Execution Missions/Rovers: ";
-	UserI.PrintInex(temp2, s);
+		InExMissions.enqueue(M,-M->getcmpday());*/
+	UserI.PrintInex(temp, s);
+	//-------------------------Execution----------------------------
 	s = "Available Rovers: ";
-	UserI.RPrintDef(ERoverList, '[', ']', s);
-	UserI.RPrintDef(PRoverList, '(', ')');
+	LinkedQueue<Rover*>templist3(ERoverList);
+	LinkedQueue<Rover*>templist4(PRoverList);
+	while (templist4.dequeue(R)) { templist3.enqueue(R); }
+	UserI.PrintDefR(templist3, s);
+	//------------------------AvailableRovers------------------------
+	s = "In-Checkup Rovers: ";
+	priorityqueue<Rover*> temp2=Checkup;
+	LinkedQueue<Rover*> temp3(temp2);
+	UserI.PrintDefR(temp3, s);
+	//------------------------CheckupRovers--------------------------
 	s = "Completed Missions: ";
-	UserI.PrintComp(CompletedMissions, s);
+	UserI.PrintDefM(CompletedMissions, s);
+	//------------------------CompletedMissions---------------------
 }
 void MarsStation::Finish()
 {
-	Mission* m;
+	Mission* M;
 	Rover* R;
-	while(InExMissions.peek(m)&&m->getcmpday()==CurrentDay)
+	while (InExMissions.peek(M) && M->getcmpday() == CurrentDay)
 	{
-		InExMissions.dequeue(m);
-		CompletedMissions.enqueue(m);
-	        R = m->getRover();
+		InExMissions.dequeue(M);
+		CompletedMissions.enqueue(M);
+		R = M->getRover();
 		R->setcheckuptime();
 		if (R->getcheckuptime())
 		{
-		if(R->getrovertype()==polarrover)
-		{
-			checkP.enqueue(R);
-			R->setCheckupEndDate(CurrentDay+R->getcheckupdays());
-		}
-		else
-		{
-			checkE.enqueue(R);
 			R->setCheckupEndDate(CurrentDay + R->getcheckupdays());
-		}
-
-		}
-		else
-		{
-			if (R->getrovertype() == polarrover)
-			{
-				PRoverList.enqueue(R);
-			}
-			else
-			{
-				ERoverList.enqueue(R);
-			}
+			Checkup.enqueue(R,-R->getCheckupEndDate());
 		}
 	}
-	while(checkP.peek(R)&&R->getCheckupEndDate()==CurrentDay)
+	while (Checkup.peek(R) && R->getCheckupEndDate() == CurrentDay)
 	{
-		PRoverList.enqueue(R);
-	}	
-	while (checkE.peek(R) && R->getCheckupEndDate() == CurrentDay)
-	{
-		ERoverList.enqueue(R);
+		if (R->getrovertype() == emergencyrover)
+		{
+			ERoverList.enqueue(R);
+		}
+		else
+		{
+			PRoverList.enqueue(R);
+		}
 	}
 
 }

@@ -15,12 +15,12 @@ private:
 	LinkedQueue<Mission*> PMissionList;
 	priorityqueue<Mission*> EMissionList;
 	priorityqueue<Mission*> InExMissions;
-	priorityqueue<Rover*> InExRovers;
-	LinkedQueue<Mission*>CompletedMissions;
-	LinkedQueue<Rover*>checkE;
-	LinkedQueue<Rover*>checkP;
+	priorityqueue<Rover*> Checkup;
+	//LinkedQueue<Rover*>checkP;
 	LinkedQueue<Rover*> PRoverList;
 	LinkedQueue<Rover*> ERoverList;
+	//priorityqueue<Rover*> InExRovers;
+	LinkedQueue<Mission*>CompletedMissions;
 public:
 	MarsStation();
 	void StationInput(LinkedQueue<Event>*);

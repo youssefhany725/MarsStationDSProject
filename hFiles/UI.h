@@ -16,9 +16,8 @@ private:
 public:
 	void input(MarsStation* ms);
 	void output();
-	void MPrintDef(LinkedQueue<Mission*>,char,char,string ="");
-	void RPrintDef(LinkedQueue<Rover*>, char,char,string="");
-	void PrintInex(LinkedQueue<Mission*>,string = "");
-	void PrintComp(LinkedQueue<Mission*>, string = "");
+	void PrintInex(priorityqueue<Mission*>,string = "");
+	void PrintDefM(LinkedQueue<Mission*>, string = "");
+	void PrintDefR(LinkedQueue<Rover*>, string = "");
 };
 
