@@ -87,13 +87,13 @@ void MarsStation::Interactive()
 	//-------------------------Waiting----------------------------
 	s = "In-Execution Missions/Rovers: ";
 	priorityqueue<Mission*>temp;
-	temp = InExMissions;
+	//temp = InExMissions;
 	/*while (InExMissions.dequeue(M))
 		temp.enqueue(M);
 	LinkedQueue<Mission*> temp2(temp);
 	while (temp.dequeue(M))
 		InExMissions.enqueue(M,-M->getcmpday());*/
-	UserI.PrintInex(temp, s);
+	UserI.PrintInex(InExMissions, s);
 	//-------------------------Execution----------------------------
 	s = "Available Rovers: ";
 	LinkedQueue<Rover*>templist3(ERoverList);
@@ -102,8 +102,7 @@ void MarsStation::Interactive()
 	UserI.PrintDefR(templist3, s);
 	//------------------------AvailableRovers------------------------
 	s = "In-Checkup Rovers: ";
-	priorityqueue<Rover*> temp2=Checkup;
-	LinkedQueue<Rover*> temp3(temp2);
+	LinkedQueue<Rover*> temp3(Checkup);
 	UserI.PrintDefR(temp3, s);
 	//------------------------CheckupRovers--------------------------
 	s = "Completed Missions: ";
