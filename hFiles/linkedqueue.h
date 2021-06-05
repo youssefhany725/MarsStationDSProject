@@ -2,6 +2,7 @@
 #define LINKED_QUEUE_
 
 #include "Node.h"
+#include "priorityqueue.h"
 #include "QueueADT.h"
 #include <vector>
 using namespace std;
@@ -29,6 +30,7 @@ public:
 	void setCount(int n);
 	//copy constructor
 	LinkedQueue(const LinkedQueue<T> & LQ);
+	LinkedQueue(priorityqueue<T>LQ);
 };
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -83,18 +85,6 @@ bool LinkedQueue<T>::enqueue(const T& newEntry)
 	Count++;
 	return true;
 } // end enqueue
-//template<typename T>
-//bool LinkedQueue<T>::enqueue(Node<T>* newnode)
-//{
-//	newnode->setNext(nullptr);
-//	if (isEmpty())	//special case if this is the first node to insert
-//		frontPtr = newnode; // The queue is empty
-//	else
-//		backPtr->setNext(newnode); // The queue was not empty
-//
-//	backPtr = newnode; // New node is the last node now
-//	return true;
-//}
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -125,21 +115,6 @@ bool LinkedQueue<T>::dequeue(T& frntEntry)
 	return true;
 
 }
-//template<typename T>
-//bool LinkedQueue<T>::dequeue(Node<T>* newnode)
-//{
-//	if (isEmpty())
-//		return false;
-//
-//	newnode = frontPtr;
-//	frontPtr = frontPtr->getNext();
-//	// Queue is not empty; remove front
-//	if (newnode == backPtr)	 // Special case: last node in the queue
-//		backPtr = nullptr;
-//	newnode->setNext(nullptr);
-//	return true;
-//
-//}
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
 Function: peek
@@ -158,14 +133,6 @@ bool LinkedQueue<T>::peek(T& frntEntry) const
 	return true;
 
 }
-//template <typename T>
-//bool LinkedQueue<T>::peek(Node<T>*newnode)
-//{
-//	if (isEmoty())
-//		return false;
-//	newnode = frontPtr;
-//	return true;
-//}
 ///////////////////////////////////////////////////////////////////////////////////
 /*
 Function: destructor
@@ -225,6 +192,15 @@ LinkedQueue<T>::LinkedQueue(const LinkedQueue<T> & LQ)
 		backPtr = ptr;
 		NodePtr = NodePtr->getNext();
 		Count++;
+	}
+}
+template <typename T>
+LinkedQueue<T>::LinkedQueue(priorityqueue<T> LQ)
+{
+	T temp;
+	while (LQ.dequeue(temp))
+	{
+		this->enqueue(temp);
 	}
 }
 

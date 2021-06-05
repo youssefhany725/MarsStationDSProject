@@ -93,7 +93,7 @@ void UI::PrintDefR(LinkedQueue<Rover*> list, string txt)
 	}
 	cout << ')' << "\n-------------------------------\n";
 }
-void UI::PrintInex(LinkedQueue<Mission*> list,string txt)
+void UI::PrintInex(priorityqueue<Mission*> list,string txt)
 {
 	Mission* M;
 	string comma="";
