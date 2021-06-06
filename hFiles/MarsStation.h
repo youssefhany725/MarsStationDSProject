@@ -5,12 +5,12 @@
 #include "Event.h"
 #include "Mission.h"
 #include"Rover.h"
-#include "UI.h"
+//#include "UI.h"
 class MarsStation
 {
 private:
 	int CurrentDay;
-	UI UserI;
+	/*UI UserI;*/
 	LinkedQueue<Event*> EventList;
 	LinkedQueue<Mission*> PMissionList;
 	priorityqueue<Mission*> EMissionList;
@@ -24,9 +24,11 @@ private:
 public:
 	MarsStation();
 	void StationInput(LinkedQueue<Event>*);
+	void InteractiveMode();
+	void Sim();
 	void MExecute();
 	void Assign();
-	void Interactive();
+	void Prints();
 	void Finish();
 	void Endday();
 	void AddEvent(missiontype missionType, int eventDay, int ID, int targetLocation, int missionDuration, int significance);

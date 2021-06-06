@@ -1,13 +1,21 @@
 #include "..\hFiles\MarsStation.h"
 #include "..\hFiles\Mission.h"
 #include "..\hFiles\Event.h"
+#include "UI.h"
 
 MarsStation::MarsStation()
 {
-	CurrentDay = 0;
-	UserI.input(this);
+	CurrentDay = 1;
+	UI::input(this);
 }
-
+void MarsStation::Sim()
+{
+	int Mode=UI::ModeSelection();
+	if (Mode == 1)
+	{
+		InteractiveMode();
+	}
+}
 void MarsStation::StationInput(LinkedQueue<Event>*)
 {
 
@@ -72,7 +80,21 @@ void MarsStation::Assign()
 		}
 	}
 }
-void MarsStation::Interactive()
+void MarsStation::InteractiveMode()
+{
+	int n = 0;
+	while (n < 24)
+	{
+		this->MExecute();
+		this->Assign();
+		this->Finish();
+		this->Prints();
+		this->Endday();
+		++n;
+		UI::intend();
+	}
+}
+void MarsStation::Prints()
 {
 	cout << "CurrentDay: " << CurrentDay << endl;
 	string s;
@@ -83,30 +105,30 @@ void MarsStation::Interactive()
 	LinkedQueue<Mission*>templist1(EMissionList);
 	LinkedQueue<Mission*>templist2(PMissionList);
 	while (templist2.dequeue(M)) { templist1.enqueue(M); }
-	UserI.PrintDefM(templist1,s);
+	UI::PrintDef(templist1,s);
 	//-------------------------Waiting----------------------------
 	s = "In-Execution Missions/Rovers: ";
-	priorityqueue<Mission*>temp;
+	//priorityqueue<Mission*>temp;
 	//temp = InExMissions;
 	/*while (InExMissions.dequeue(M))
 		temp.enqueue(M);
 	LinkedQueue<Mission*> temp2(temp);
 	while (temp.dequeue(M))
 		InExMissions.enqueue(M,-M->getcmpday());*/
-	UserI.PrintInex(InExMissions, s);
+	UI::PrintInex(InExMissions, s);
 	//-------------------------Execution----------------------------
 	s = "Available Rovers: ";
 	LinkedQueue<Rover*>templist3(ERoverList);
 	LinkedQueue<Rover*>templist4(PRoverList);
 	while (templist4.dequeue(R)) { templist3.enqueue(R); }
-	UserI.PrintDefR(templist3, s);
+	UI::PrintDef(templist3, s);
 	//------------------------AvailableRovers------------------------
 	s = "In-Checkup Rovers: ";
-	LinkedQueue<Rover*> temp3(Checkup);
-	UserI.PrintDefR(temp3, s);
+	LinkedQueue<Rover*> temp(Checkup);
+	UI::PrintDef(temp, s);
 	//------------------------CheckupRovers--------------------------
 	s = "Completed Missions: ";
-	UserI.PrintDefM(CompletedMissions, s);
+	UI::PrintDef(CompletedMissions, s);
 	//------------------------CompletedMissions---------------------
 }
 void MarsStation::Finish()
@@ -127,7 +149,7 @@ void MarsStation::Finish()
 	}
 	while (Checkup.peek(R) && R->getCheckupEndDate() == CurrentDay)
 	{
-		if (R->getrovertype() == emergencyrover)
+		if (R->gettype() == emergencyrover)
 		{
 			ERoverList.enqueue(R);
 		}

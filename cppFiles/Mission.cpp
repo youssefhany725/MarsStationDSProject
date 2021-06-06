@@ -1,21 +1,21 @@
 #include "..\hFiles\Mission.h"
-Mission::Mission(missiontype a,int ed, int id, int tloc, int mdur, int sig)
+Mission::Mission(missiontype typ,int fd, int id, int tloc, int mdur, int sig)
 {
-	TYP = a;
+	TYP = typ;
 	ID = id;
 	Rassigned = nullptr;
 	CD = -1;
-	ED = ed;
+	FD = fd;
 	TLOC = tloc;
 	MDUR = mdur;
 	SIG = sig;
 	WD = 0;
 }
-void Mission::Assign(Rover* R,int cd)
+void Mission::Assign(Rover* R,int cday)
 {
 	Rassigned = R;
-	CD = cd + MDUR + ((TLOC/R->getspeed()) / 25);
-	WD = cd - ED;
+	CD = cday + MDUR + 2*((TLOC/R->getspeed()) / 25);
+	WD = cday - FD;
 }
 int Mission::getcmpday()
 {

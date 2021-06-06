@@ -63,7 +63,7 @@ void Rover::setrovertype(rovertype rt) {
 	roverType = rt;
 }
 
-rovertype Rover::getrovertype() {
+rovertype Rover::gettype() {
 	return roverType;
 }
 

@@ -25,7 +25,7 @@ public:
 	void setid(int x);
 	int getspeed();
 	void setrovertype(rovertype rt);
-	rovertype getrovertype();
+	rovertype gettype();
 	int getcheckupdays();
 	int getCheckupEndDate();
 	void setCheckupEndDate(int n);
