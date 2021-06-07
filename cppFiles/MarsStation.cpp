@@ -12,7 +12,7 @@ void MarsStation::inputFromFile()
 	inputFile >> x >> P >> E;
 	inputFile >> x >> SP >> SE;
 	inputFile >> N >> x >> CP >> CE;
-	if ((P == 0 && E == 0) || SP <= 0 || SE <= 0 || N <= 0 || CP < 0 || CE < 0) {
+	if ((P == 0 && E == 0) || SP <= 0 || SE <= 0 || N <= 0 || CP <= 0 || CE <= 0) {
 		cout << "The file you entered is invalid, please try again\n";
 		inputFromFile();
 	}
