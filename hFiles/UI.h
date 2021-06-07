@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <conio.h>
+#include <windows.h>
 #include "linkedqueue.h"
 #include "priorityqueue.h"
 #include "Mission.h"
@@ -21,10 +21,12 @@ public:
 	static void PrintInex(priorityqueue<Mission*>,string = "");
 	static int ModeSelection();
 	static void intend();
+	static void stepend();
+	static void silentend();
 	template<typename T>
 	static void PrintDef(LinkedQueue<T>, string = "");
-	static void PrintDefR(LinkedQueue<Rover*>, string = "");
-	static void PrintDefM(LinkedQueue<Mission*>, string = "");
+	//static void PrintDefR(LinkedQueue<Rover*>, string = "");
+	//static void PrintDefM(LinkedQueue<Mission*>, string = "");
 };
 ifstream UI::ReadActionParameters()
 {
@@ -89,51 +91,58 @@ void UI::input(MarsStation* ms)
 int UI::ModeSelection()
 {
 	cout << "Mode Selection:\n1)Interactive\n2)Step-by-Step\n3)Silent\n";
-	int slct;
-	cin >> slct;
-	cout << endl;
+	int slct=0;
+	while (slct < 1 || slct>3)
+		cin >> slct;
+	cin.ignore(128,'\n');
 	return slct;
 }
 void UI::intend()
 {
-	string c;
-	getline(cin,c);
-	//cin.ignore(128,'\n');
+	cin.ignore(128,'\n');
 	cout << endl;
 }
-void UI::PrintDefR(LinkedQueue<Rover*> list, string txt)
+void UI::stepend()
 {
-	Rover* R;
-	string comma = "";
-	LinkedQueue<Rover*> temp;
-	cout << list.getCount() << " ";
-	cout << txt;
-	cout << '[';
-	while (list.dequeue(R))
-	{
-		if (R->gettype() == emergency)
-		{
-			cout << comma;
-			cout << R->getid();
-			comma = ",";
-		}
-		else
-		{
-			temp.enqueue(R);
-		}
-	}
-	cout << ']' << " ";
-	cout << '(';
-	while (temp.dequeue(R))
-	{
-		cout << R->getid();
-		if (!temp.isEmpty())
-		{
-			cout << ",";
-		}
-	}
-	cout << ')' << "\n-------------------------------\n";
+	Sleep(1000);
 }
+void UI::silentend()
+{
+	cout << "Silent Mode" << endl << "Simulation Starts..." << endl;
+}
+//void UI::PrintDefR(LinkedQueue<Rover*> list, string txt)
+//{
+//	Rover* R;
+//	string comma = "";
+//	LinkedQueue<Rover*> temp;
+//	cout << list.getCount() << " ";
+//	cout << txt;
+//	cout << '[';
+//	while (list.dequeue(R))
+//	{
+//		if (R->gettype() == emergency)
+//		{
+//			cout << comma;
+//			cout << R->getid();
+//			comma = ",";
+//		}
+//		else
+//		{
+//			temp.enqueue(R);
+//		}
+//	}
+//	cout << ']' << " ";
+//	cout << '(';
+//	while (temp.dequeue(R))
+//	{
+//		cout << R->getid();
+//		if (!temp.isEmpty())
+//		{
+//			cout << ",";
+//		}
+//	}
+//	cout << ')' << "\n-------------------------------\n";
+//}
 void UI::PrintInex(priorityqueue<Mission*> list, string txt)
 {
 	Mission* M;
@@ -201,39 +210,39 @@ void UI::PrintDef(LinkedQueue<T> list, string txt)
 	}
 	cout << ')' << "\n-------------------------------\n";
 }
-void UI::PrintDefM(LinkedQueue<Mission*> list, string txt)
-{
-	Mission* M;
-	string comma = "";
-	LinkedQueue<Mission*> temp;
-	cout << list.getCount() << " ";
-	cout << txt;
-	cout << '[';
-	while (list.dequeue(M))
-	{
-		if (M->gettype() == 1)
-		{
-			cout << comma;
-			cout << M->getid();
-			comma = ",";
-		}
-		else
-		{
-			temp.enqueue(M);
-		}
-	}
-	cout << ']' << " ";
-	cout << '(';
-	while (temp.dequeue(M))
-	{
-		cout << M->getid();
-		if (!temp.isEmpty())
-		{
-			cout << ",";
-		}
-	}
-	cout << ')' << "\n-------------------------------\n";
-}
+//void UI::PrintDefM(LinkedQueue<Mission*> list, string txt)
+//{
+//	Mission* M;
+//	string comma = "";
+//	LinkedQueue<Mission*> temp;
+//	cout << list.getCount() << " ";
+//	cout << txt;
+//	cout << '[';
+//	while (list.dequeue(M))
+//	{
+//		if (M->gettype() == 1)
+//		{
+//			cout << comma;
+//			cout << M->getid();
+//			comma = ",";
+//		}
+//		else
+//		{
+//			temp.enqueue(M);
+//		}
+//	}
+//	cout << ']' << " ";
+//	cout << '(';
+//	while (temp.dequeue(M))
+//	{
+//		cout << M->getid();
+//		if (!temp.isEmpty())
+//		{
+//			cout << ",";
+//		}
+//	}
+//	cout << ')' << "\n-------------------------------\n";
+//}
 void UI::output()
 {
 

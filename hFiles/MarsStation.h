@@ -24,7 +24,7 @@ private:
 public:
 	MarsStation();
 	void StationInput(LinkedQueue<Event>*);
-	void InteractiveMode();
+	void Interface(int);
 	void Sim();
 	void MExecute();
 	void Assign();

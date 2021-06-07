@@ -11,10 +11,7 @@ MarsStation::MarsStation()
 void MarsStation::Sim()
 {
 	int Mode=UI::ModeSelection();
-	if (Mode == 1)
-	{
-		InteractiveMode();
-	}
+	Interface(Mode);
 }
 void MarsStation::StationInput(LinkedQueue<Event>*)
 {
@@ -80,19 +77,30 @@ void MarsStation::Assign()
 		}
 	}
 }
-void MarsStation::InteractiveMode()
+void MarsStation::Interface(int mod)
 {
 	int n = 0;
+	if (mod == 3)
+	{
+		UI::silentend();
+	}
 	while (n < 24)
 	{
 		this->MExecute();
 		this->Assign();
 		this->Finish();
-		this->Prints();
+		if (mod != 3)
+		{
+			this->Prints();
+		}
 		this->Endday();
 		++n;
-		UI::intend();
+		if (mod == 1)
+			UI::intend();
+		else if (mod == 2)
+			UI::stepend();
 	}
+	UI::output();
 }
 void MarsStation::Prints()
 {
