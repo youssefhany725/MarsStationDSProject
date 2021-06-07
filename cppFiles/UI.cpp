@@ -25,9 +25,9 @@
 //	char c, TYP;
 //	inputFile >> x;
 //	inputFile >> P;
-//	for (int i = 0; i < P; i++) ms->AddRover(polarrover, i);
+//	for (int i = 0; i < P; i++) ms->AddRover(polar, i);
 //	inputFile >> E;
-//	for (int i = 0; i < E; i++) ms->AddRover(emergencyrover, i + P);
+//	for (int i = 0; i < E; i++) ms->AddRover(emergency, i + P);
 //	inputFile >> x;
 //	inputFile >> SP;
 //	ms->setPolar_speed(SP);

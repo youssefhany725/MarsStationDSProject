@@ -5,10 +5,10 @@ class Rover
 {
 	static int missionsToCheckup, polar_checkupDuration, emergency_checkupDuration, polar_speed, emergency_speed;
 	int ID, checkupEndDate;
-	rovertype roverType;
+	type roverType;
 	int time = 0;
 public:
-	Rover(rovertype rt, int id);
+	Rover(type rt, int id);
 
 	static void setMissionsToCheckup(int n);
 	static int getMissionsToCheckup();
@@ -24,8 +24,8 @@ public:
 	int getid();
 	void setid(int x);
 	int getspeed();
-	void setrovertype(rovertype rt);
-	rovertype gettype();
+	void setrovertype(type rt);
+	type gettype();
 	int getcheckupdays();
 	int getCheckupEndDate();
 	void setCheckupEndDate(int n);

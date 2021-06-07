@@ -1,5 +1,5 @@
 #include "..\hFiles\Rover.h"
-Rover::Rover(rovertype rt, int id) {
+Rover::Rover(type rt, int id) {
 	roverType = rt;
 	ID = id;
 	checkupEndDate = -1;
@@ -55,20 +55,20 @@ void Rover::setid(int x) {
 }
 
 int Rover::getspeed() {
-	if (roverType == polarrover) return polar_speed;
+	if (roverType == polar) return polar_speed;
 	else return emergency_speed;
 }
 
-void Rover::setrovertype(rovertype rt) {
+void Rover::setrovertype(type rt) {
 	roverType = rt;
 }
 
-rovertype Rover::gettype() {
+type Rover::gettype() {
 	return roverType;
 }
 
 int Rover::getcheckupdays() {
-	if (roverType == polarrover) return polar_checkupDuration;
+	if (roverType == polar) return polar_checkupDuration;
 	else return emergency_checkupDuration;
 }
 

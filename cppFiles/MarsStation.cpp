@@ -41,11 +41,11 @@ void MarsStation::inputFromFile()
 		}
 	}
 	for (int i = 1; i <= P; i++) {
-		Rover* r = new Rover(polarrover, i);
+		Rover* r = new Rover(polar, i);
 		PRoverList.enqueue(r);
 	}
 	for (int i = 1; i <= E; i++) {
-		Rover* r = new Rover(emergencyrover, i + P);
+		Rover* r = new Rover(emergency, i + P);
 		ERoverList.enqueue(r);
 	}
 	Rover::setPolar_speed(SP);
@@ -159,7 +159,7 @@ void MarsStation::MExecute()
 		E->Execute();
 		Mission* M = E->getMission();
 		if (M->gettype() == emergency)
-			EMissionList.enqueue(M, M->getPkey());//priority needed
+			EMissionList.enqueue(M, M->getPkey());
 		else
 			PMissionList.enqueue(M);
 		delete E;
@@ -178,7 +178,6 @@ void MarsStation::Assign()
 			EMissionList.dequeue(M);
 			M->Assign(R, CurrentDay);
 			InExMissions.enqueue(M, -M->getcmpday());
-			//InExRovers.enqueue(R, -M->getcmpday());
 		}
 		else if (!PRoverList.isEmpty())
 		{
@@ -186,7 +185,6 @@ void MarsStation::Assign()
 			EMissionList.dequeue(M);
 			M->Assign(R, CurrentDay);
 			InExMissions.enqueue(M, -M->getcmpday());
-			//InExRovers.enqueue(R,-M->getcmpday());
 		}
 		else
 		{
@@ -201,7 +199,6 @@ void MarsStation::Assign()
 			PMissionList.dequeue(M);
 			M->Assign(R, CurrentDay);
 			InExMissions.enqueue(M, -M->getcmpday());
-			//InExRovers.enqueue(R, -M->getcmpday());
 		}
 		else
 		{
@@ -211,22 +208,20 @@ void MarsStation::Assign()
 }
 void MarsStation::Interface(int mod)
 {
-	int n = 0;
 	if (mod == 3) //Silent Mode
 	{
 		UI::silentend();
 	}
 	while (!EventList.isEmpty() || !EMissionList.isEmpty() || !PMissionList.isEmpty() || !InExMissions.isEmpty() || !Checkup.isEmpty())
 	{
-		this->MExecute();
-		this->Assign();
-		this->Finish();
+		MExecute();
+		Assign();
+		Finish();
 		if (mod != 3)
 		{
-			this->Prints();
+			Prints();
 		}
-		this->Endday();
-		++n;
+		Endday();
 		if (mod == 1) //Interactive Mode
 			UI::intend();
 		else if (mod == 2) //Step-by-Step Mode
@@ -249,13 +244,6 @@ void MarsStation::Prints()
 	UI::PrintDef(templist1, s);
 	//-------------------------Waiting----------------------------
 	s = "In-Execution Missions/Rovers: ";
-	//priorityqueue<Mission*>temp;
-	//temp = InExMissions;
-	/*while (InExMissions.dequeue(M))
-		temp.enqueue(M);
-	LinkedQueue<Mission*> temp2(temp);
-	while (temp.dequeue(M))
-		InExMissions.enqueue(M,-M->getcmpday());*/
 	UI::PrintInex(InExMissions, s);
 	//-------------------------Execution----------------------------
 	s = "Available Rovers: ";
@@ -289,7 +277,7 @@ void MarsStation::Finish()
 		}
 		else
 		{
-			if (R->gettype() == emergencyrover)
+			if (R->gettype() == emergency)
 				ERoverList.enqueue(R);
 			else
 			{
@@ -299,7 +287,7 @@ void MarsStation::Finish()
 	}
 	while (Checkup.peek(R) && R->getCheckupEndDate() == CurrentDay)
 	{
-		if (R->gettype() == emergencyrover)
+		if (R->gettype() == emergency)
 		{
 			Checkup.dequeue(R);
 			ERoverList.enqueue(R);

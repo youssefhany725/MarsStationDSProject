@@ -20,14 +20,10 @@ public:
 	LinkedQueue();
 	bool isEmpty() const;
 	bool enqueue(const T& newEntry);
-	//bool enqueue(Node<T>* newnode);
 	bool dequeue(T& frntEntry);
-	//bool dequeue(Node*<T> newnode);
 	bool peek(T& frntEntry)  const;
-	//bool peek(Node<T>* newnode);
 	~LinkedQueue();
 	int getCount();
-	void setCount(int n);
 	//copy constructor
 	LinkedQueue(const LinkedQueue<T>& LQ);
 	LinkedQueue(priorityqueue<T>LQ);
@@ -155,12 +151,6 @@ int LinkedQueue<T>::getCount()
 	return Count;
 }
 
-template <typename T>
-void LinkedQueue<T>::setCount(int n)
-{
-	Count = n;
-}
-
 
 template <typename T>
 LinkedQueue<T>::LinkedQueue(const LinkedQueue<T>& LQ)
@@ -191,6 +181,9 @@ LinkedQueue<T>::LinkedQueue(const LinkedQueue<T>& LQ)
 template <typename T>
 LinkedQueue<T>::LinkedQueue(priorityqueue<T> LQ)
 {
+	backPtr = nullptr;
+	frontPtr = nullptr;
+	Count = 0;
 	T temp;
 	while (LQ.dequeue(temp))
 	{

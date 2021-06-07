@@ -1,13 +1,6 @@
 #pragma once
-enum missiontype
+enum type
 {
 	polar,
 	emergency
-
-};
-enum rovertype
-{
-	polarrover,
-	emergencyrover
-
 };

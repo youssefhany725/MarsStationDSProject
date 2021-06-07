@@ -5,6 +5,5 @@ int main()
 {
 	MarsStation Base;
 	Base.Sim();
-	//output
 	return 0;
 }

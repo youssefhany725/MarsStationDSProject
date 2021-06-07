@@ -1,8 +1,8 @@
 #include "..\hFiles\Event.h"
 #include "..\hFiles\Mission.h"
-Event::Event(missiontype a,int b,int c,int d,int e,int f)
+Event::Event(type typ,int ed,int id,int tloc,int mdur,int sig)
 {
-	TYP = a; ED = b; ID = c;  TLOC = d;  MDUR = e;  SIG = f; M = nullptr;
+	TYP = typ; ED = ed; ID = id;  TLOC = tloc;  MDUR = mdur;  SIG = sig; M = nullptr;
 }
 void Event::Execute()
 {
