@@ -92,4 +92,3 @@ bool Rover::getcheckuptime()
 	}
 	return (time % getMissionsToCheckup() == 0);
 }
-

@@ -32,5 +32,3 @@ public:
 	void setcheckuptime();
 	bool getcheckuptime();
 };
-
-

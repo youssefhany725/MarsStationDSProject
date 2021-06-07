@@ -1,5 +1,5 @@
 #include "..\hFiles\Mission.h"
-Mission::Mission(missiontype typ,int fd, int id, int tloc, int mdur, int sig)
+Mission::Mission(missiontype typ, int fd, int id, int tloc, int mdur, int sig)
 {
 	TYP = typ;
 	ID = id;
@@ -10,16 +10,25 @@ Mission::Mission(missiontype typ,int fd, int id, int tloc, int mdur, int sig)
 	MDUR = mdur;
 	SIG = sig;
 	WD = 0;
+	Epriority = 0;
 }
-void Mission::Assign(Rover* R,int cday)
+void Mission::Assign(Rover* R, int cday)
 {
 	Rassigned = R;
-	CD = cday + MDUR + 2*((TLOC/R->getspeed()) / 25);
+	CD = cday + MDUR + 2 * ((TLOC / R->getspeed()) / 25);
 	WD = cday - FD;
 }
 int Mission::getcmpday()
 {
 	return CD;
+}
+int Mission::getWD()
+{
+	return WD;
+}
+int Mission::getFD()
+{
+	return FD;
 }
 Rover* Mission::getRover()
 {
@@ -40,4 +49,3 @@ int Mission::getMDUR()
 {
 	return MDUR;
 }
-

@@ -3,7 +3,7 @@
 #include "linkedqueue.h"
 
 template <typename T>
-class priorityqueue /*:public LinkedQueue<T>*/
+class priorityqueue
 {
 
 	priorityNode <T>* Head = nullptr;
@@ -21,6 +21,28 @@ public:
 		Head = nullptr;
 		Count = 0;
 
+	}
+	priorityqueue(const priorityqueue<T>& LQ)
+	{
+		priorityNode<T>* NodePtr = LQ.Head;
+		if (!NodePtr) //LQ is empty
+		{
+			Head = rear = nullptr;
+			Count = 0;
+			return;
+		}
+		priorityNode<T>* ptr = new priorityNode<T>(NodePtr->getItem(),NodePtr->getsignificant());
+		Head = rear = ptr;
+		NodePtr = NodePtr->getNext();
+		Count = 1;
+		while (NodePtr)
+		{
+			priorityNode<T>* ptr = new priorityNode<T>(NodePtr->getItem(),NodePtr->getsignificant());
+			rear->setNext(ptr);
+			rear = ptr;
+			NodePtr = NodePtr->getNext();
+			Count++;
+		}
 	}
 	bool enqueue(const T& newitem, int sig) {
 		bool b = true;
@@ -58,7 +80,7 @@ public:
 			rear = nullptr;
 
 
-		//delete Deletednode;
+		delete Deletednode;
 		Count--;
 		return true;
 	}

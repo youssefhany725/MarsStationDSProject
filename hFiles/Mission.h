@@ -15,10 +15,12 @@ private:
 	int FD;
 	int WD;
 public:
-	Mission(missiontype typ = polar, int fd=0, int id = 0, int tloc = 0, int mdur = 0, int sig = 0);
+	Mission(missiontype typ = polar, int fd = 0, int id = 0, int tloc = 0, int mdur = 0, int sig = 0);
 	missiontype gettype();
-	void Assign(Rover* R,int);
+	void Assign(Rover* R, int);
 	int getcmpday();
+	int getWD();
+	int getFD();
 	int getPkey();
 	Rover* getRover();
 	int getid();

@@ -11,7 +11,7 @@ class MarsStation
 private:
 	int CurrentDay;
 	/*UI UserI;*/
-	LinkedQueue<Event*> EventList;
+	priorityqueue<Event*> EventList;
 	LinkedQueue<Mission*> PMissionList;
 	priorityqueue<Mission*> EMissionList;
 	priorityqueue<Mission*> InExMissions;
@@ -21,24 +21,16 @@ private:
 	LinkedQueue<Rover*> ERoverList;
 	//priorityqueue<Rover*> InExRovers;
 	LinkedQueue<Mission*>CompletedMissions;
-public:
-	MarsStation();
-	void StationInput(LinkedQueue<Event>*);
-	void Interface(int);
-	void Sim();
+	void inputFromFile();
+	void outputToFile();
 	void MExecute();
 	void Assign();
 	void Prints();
 	void Finish();
 	void Endday();
-	void AddEvent(missiontype missionType, int eventDay, int ID, int targetLocation, int missionDuration, int significance);
-	void AddRover(rovertype roverType, int ID);
-	//void AddRover(rovertype roverType, int checkupDuration, int speed);
-	void setMissionsToCheckup(int n);
-	void setPolar_checkupDuration(int n);
-	void setEmergency_checkupDuration(int n);
-	void setPolar_speed(int n);
-	void setEmergency_speed(int n);
+	void Interface(int);
+public:
+	MarsStation();
+	void Sim();
+	~MarsStation();
 };
-
-
