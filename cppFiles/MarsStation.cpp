@@ -135,7 +135,7 @@ void MarsStation::outputToFile()
 	outputFile << "Missions: " << Mcount << "\t[P: " << PMcount << ", E: " << Mcount - PMcount << "]\n";
 	int PRcount = PRoverList.getCount(), ERcount = ERoverList.getCount();
 	outputFile << "Rovers: " << PRcount + ERcount << "\t[P: " << PRcount << ", E: " << ERcount << "]\n";
-	outputFile << "Avg Wait = " << (double)TotalWD / Mcount << ",\tAvg Exec = " << (double)TotalED / Mcount << '\n';
+	outputFile << "Avg Wait = " << (double)TotalWD / ((Mcount > 0) ? Mcount : 1) << ",\tAvg Exec = " << (double)TotalED / ((Mcount > 0) ? Mcount : 1) << '\n';
 	outputFile.close();
 }
 
