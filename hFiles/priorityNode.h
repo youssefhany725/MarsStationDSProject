@@ -4,26 +4,26 @@ template <typename T>
 class priorityNode
 {
 
-	T item;
+	T Item;
 	int significant;
-	priorityNode<T>* next;
+	priorityNode<T>* Next;
 public:
 
 	priorityNode()
 	{
-		next = nullptr;
+		Next = nullptr;
 	}
 
 	priorityNode(T newItem, int s)
 	{
-		item = newItem;
-		next = nullptr;
+		Item = newItem;
+		Next = nullptr;
 		significant = s;
 
 	}
-	void setsignificant(int& s)
+	void setsignificant(int s)
 	{
-		significant = &s;
+		significant = s;
 	}
 	int getsignificant()
 	{
@@ -31,22 +31,22 @@ public:
 	}
 	void setItem(T newItem)
 	{
-		item = newItem;
+		Item = newItem;
 	}
 
 	void setNext(priorityNode<T>* nextNodePtr)
 	{
-		next = nextNodePtr;
+		Next = nextNodePtr;
 	}
 
 	T getItem() const
 	{
-		return item;
+		return Item;
 	}
 
 	priorityNode<T>* getNext() const
 	{
-		return next;
+		return Next;
 	}
 
 };
