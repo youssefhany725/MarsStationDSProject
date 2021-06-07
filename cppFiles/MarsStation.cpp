@@ -80,11 +80,11 @@ void MarsStation::Assign()
 void MarsStation::Interface(int mod)
 {
 	int n = 0;
-	if (mod == 3)
+	if (mod == 3) //Silent Mode
 	{
 		UI::silentend();
 	}
-	while (n < 24)
+	while (!InExMissions.isEmpty()||!EMissionList.isEmpty()||!PMissionList.isEmpty()||!EventList.isEmpty())
 	{
 		this->MExecute();
 		this->Assign();
@@ -95,9 +95,9 @@ void MarsStation::Interface(int mod)
 		}
 		this->Endday();
 		++n;
-		if (mod == 1)
+		if (mod == 1) //Interactive Mode
 			UI::intend();
-		else if (mod == 2)
+		else if (mod == 2) //Step-by-Step Mode
 			UI::stepend();
 	}
 	UI::output();
@@ -159,10 +159,12 @@ void MarsStation::Finish()
 	{
 		if (R->gettype() == emergencyrover)
 		{
+			Checkup.dequeue(R);
 			ERoverList.enqueue(R);
 		}
 		else
 		{
+			Checkup.dequeue(R);
 			PRoverList.enqueue(R);
 		}
 	}
