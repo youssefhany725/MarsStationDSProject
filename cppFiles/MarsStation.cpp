@@ -262,8 +262,8 @@ void MarsStation::Interface(int mod)
 	while (!EventList.isEmpty() || !EMissionList.isEmpty() || !PMissionList.isEmpty() || !InExMissions.isEmpty() || !Checkup.isEmpty())
 	{
 		MExecute();
-		Assign();
 		Finish();
+		Assign();
 		if (mod != 3)
 		{
 			Prints();
@@ -311,27 +311,6 @@ void MarsStation::Finish()
 {
 	Mission* M;
 	Rover* R;
-	while (InExMissions.peek(M) && M->getcmpday() == CurrentDay)
-	{
-		InExMissions.dequeue(M);
-		CompletedMissions.enqueue(M);
-		R = M->getRover();
-		R->setcheckuptime();
-		if (R->getcheckuptime())
-		{
-			R->setCheckupEndDate(CurrentDay + R->getcheckupdays());
-			Checkup.enqueue(R, -R->getCheckupEndDate());
-		}
-		else
-		{
-			if (R->gettype() == emergency)
-				ERoverList.enqueue(R);
-			else
-			{
-				PRoverList.enqueue(R);
-			}
-		}
-	}
 	while (Checkup.peek(R) && R->getCheckupEndDate() == CurrentDay)
 	{
 		Checkup.dequeue(R);
@@ -354,6 +333,27 @@ void MarsStation::Finish()
 			{
 				ERoverList.enqueue(R);
 			}
+			else
+			{
+				PRoverList.enqueue(R);
+			}
+		}
+	}
+	while (InExMissions.peek(M) && M->getcmpday() == CurrentDay)
+	{
+		InExMissions.dequeue(M);
+		CompletedMissions.enqueue(M);
+		R = M->getRover();
+		R->setcheckuptime();
+		if (R->getcheckuptime())
+		{
+			R->setCheckupEndDate(CurrentDay + R->getcheckupdays());
+			Checkup.enqueue(R, -R->getCheckupEndDate());
+		}
+		else
+		{
+			if (R->gettype() == emergency)
+				ERoverList.enqueue(R);
 			else
 			{
 				PRoverList.enqueue(R);
@@ -387,7 +387,7 @@ void MarsStation::Finish()
 			PRoverList.enqueue(R);
 		}
 	}
-	Assign();
+	//Assign();
 }
 void MarsStation::Endday()
 {
