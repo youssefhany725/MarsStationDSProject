@@ -1,4 +1,5 @@
 #include "..\hFiles\Mission.h"
+#include <math.h>
 Mission::Mission(type typ, int fd, int id, int tloc, int mdur, int sig)
 {
 	TYP = typ;
@@ -14,7 +15,7 @@ Mission::Mission(type typ, int fd, int id, int tloc, int mdur, int sig)
 void Mission::Assign(Rover* R, int cday)
 {
 	Rassigned = R;
-	CD = cday + MDUR + 2 * ((TLOC / R->getspeed()) / 25);
+	CD = cday + MDUR + ceil(2 * (((double)TLOC / R->getspeed()) / 25));
 	WD = cday - FD;
 }
 int Mission::getcmpday()

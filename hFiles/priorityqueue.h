@@ -57,12 +57,11 @@ public:
 		{
 			itrator = Head;
 			while (itrator->getNext() && itrator->getNext()->getsignificant() >= sig)
-
+			{
 				itrator = itrator->getNext();
+			}
 			newNodePtr->setNext(itrator->getNext());
 			itrator->setNext(newNodePtr);
-
-
 		}
 		Count++;
 		return true;

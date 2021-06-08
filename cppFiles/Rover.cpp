@@ -3,6 +3,9 @@ Rover::Rover(type rt, int id) {
 	roverType = rt;
 	ID = id;
 	checkupEndDate = -1;
+	speed = 0;
+	time = 0;
+	maintenance = 0;
 }
 
 int Rover::missionsToCheckup = 0, Rover::polar_checkupDuration = 0,
@@ -31,12 +34,12 @@ int Rover::getEmergency_checkupDuration() {
 	return emergency_checkupDuration;
 }
 
-void Rover::setPolar_speed(int n) {
-	polar_speed = n;
+void Rover::setspeed(int n) {
+	speed = n;
 }
 
-int Rover::getPolar_speed() {
-	return polar_speed;
+int Rover::getspeed() {
+	return speed;
 }
 
 void Rover::setEmergency_speed(int n) {
@@ -46,17 +49,19 @@ void Rover::setEmergency_speed(int n) {
 int Rover::getEmergency_speed() {
 	return emergency_speed;
 }
+void Rover::setPolar_speed(int n) {
+	polar_speed = n;
+}
+
+int Rover::getPolar_speed() {
+	return polar_speed;
+}
 int Rover::getid() {
 	return ID;
 }
 
 void Rover::setid(int x) {
 	ID = x;
-}
-
-int Rover::getspeed() {
-	if (roverType == polar) return polar_speed;
-	else return emergency_speed;
 }
 
 void Rover::setrovertype(type rt) {
@@ -91,4 +96,24 @@ bool Rover::getcheckuptime()
 		return false;
 	}
 	return (time % getMissionsToCheckup() == 0);
+}
+void Rover::setmaintance(int n)
+{
+	if (n < 0)
+	{
+		maintenance = 0;
+		return;
+	}
+	maintenance++;
+}
+bool Rover::getmaintaince()
+{
+	if (maintenance <= 0)
+	{
+		return false;
+	}
+	else
+	{
+		return (maintenance >= 5);
+	}
 }

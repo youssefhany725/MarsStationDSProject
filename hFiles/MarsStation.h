@@ -14,6 +14,8 @@ private:
 	priorityqueue<Mission*> EMissionList;
 	priorityqueue<Mission*> InExMissions;
 	priorityqueue<Rover*> Checkup;
+	LinkedQueue<Rover*> MaintenanceE;
+	LinkedQueue<Rover*> MaintenanceP;
 	LinkedQueue<Rover*> PRoverList;
 	LinkedQueue<Rover*> ERoverList;
 	LinkedQueue<Mission*>CompletedMissions;

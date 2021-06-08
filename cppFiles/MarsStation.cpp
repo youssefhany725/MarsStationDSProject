@@ -42,10 +42,12 @@ void MarsStation::inputFromFile()
 	}
 	for (int i = 1; i <= P; i++) {
 		Rover* r = new Rover(polar, i);
+		r->setspeed(SP);
 		PRoverList.enqueue(r);
 	}
 	for (int i = 1; i <= E; i++) {
 		Rover* r = new Rover(emergency, i + P);
+		r->setspeed(SE);
 		ERoverList.enqueue(r);
 	}
 	Rover::setPolar_speed(SP);
@@ -114,7 +116,7 @@ void MarsStation::outputToFile()
 				int FD1 = M->getFD();
 				int WD1 = M->getWD();
 				int ED1 = CD1 - FD1 - WD1;
-				M_Q.enqueue(M, -ED);
+				M_Q.enqueue(M, -ED1);
 			}
 			while (M_Q.dequeue(M)) {
 				int CD1 = M->getcmpday();
@@ -175,6 +177,7 @@ void MarsStation::Assign()
 		if (!ERoverList.isEmpty())
 		{
 			ERoverList.dequeue(R);
+			R->setmaintance(1);
 			EMissionList.dequeue(M);
 			M->Assign(R, CurrentDay);
 			InExMissions.enqueue(M, -M->getcmpday());
@@ -182,7 +185,36 @@ void MarsStation::Assign()
 		else if (!PRoverList.isEmpty())
 		{
 			PRoverList.dequeue(R);
+			R->setmaintance(1);
 			EMissionList.dequeue(M);
+			M->Assign(R, CurrentDay);
+			InExMissions.enqueue(M, -M->getcmpday());
+		}
+		else if (!MaintenanceE.isEmpty())
+		{
+			MaintenanceE.peek(R);
+			if (R->getspeed() == 1)
+			{
+				break;
+			}
+			MaintenanceE.dequeue(R);
+			R->setspeed(R->getspeed() / 2);
+			EMissionList.dequeue(M);
+			R->setmaintance(1);
+			M->Assign(R, CurrentDay);
+			InExMissions.enqueue(M, -M->getcmpday());
+		}
+		else if (!MaintenanceP.isEmpty())
+		{
+			MaintenanceP.peek(R);
+			if (R->getspeed() == 1)
+			{
+				break;
+			}
+			MaintenanceP.dequeue(R);
+			R->setspeed(R->getspeed() / 2);
+			EMissionList.dequeue(M);
+			R->setmaintance(1);
 			M->Assign(R, CurrentDay);
 			InExMissions.enqueue(M, -M->getcmpday());
 		}
@@ -196,7 +228,22 @@ void MarsStation::Assign()
 		if (!PRoverList.isEmpty())
 		{
 			PRoverList.dequeue(R);
+			R->setmaintance(1);
 			PMissionList.dequeue(M);
+			M->Assign(R, CurrentDay);
+			InExMissions.enqueue(M, -M->getcmpday());
+		}
+		else if (!MaintenanceP.isEmpty())
+		{
+			MaintenanceP.peek(R);
+			if (R->getspeed() == 1)
+			{
+				break;
+			}
+			MaintenanceP.dequeue(R);
+			R->setspeed(R->getspeed() / 2);
+			PMissionList.dequeue(M);
+			R->setmaintance(1);
 			M->Assign(R, CurrentDay);
 			InExMissions.enqueue(M, -M->getcmpday());
 		}
@@ -284,6 +331,48 @@ void MarsStation::Finish()
 				PRoverList.enqueue(R);
 			}
 		}
+	}
+	while (Checkup.peek(R) && R->getCheckupEndDate() == CurrentDay)
+	{
+		Checkup.dequeue(R);
+		if (R->getmaintaince())
+		{
+
+			if (R->gettype() == polar)
+			{
+				MaintenanceP.enqueue(R);
+			}
+			else
+			{
+				MaintenanceE.enqueue(R);
+			}
+			R->setCheckupEndDate(CurrentDay + 5);
+		}
+		else
+		{
+			if (R->gettype() == emergency)
+			{
+				ERoverList.enqueue(R);
+			}
+			else
+			{
+				PRoverList.enqueue(R);
+			}
+		}
+	}
+	while (MaintenanceP.peek(R) && R->getCheckupEndDate() == CurrentDay)
+	{
+		MaintenanceP.dequeue(R);
+		R->setmaintance(-1);
+		R->setspeed(R->getPolar_speed());
+		PRoverList.enqueue(R);
+	}
+	while (MaintenanceE.peek(R) && R->getCheckupEndDate() == CurrentDay)
+	{
+		MaintenanceE.dequeue(R);
+		R->setmaintance(-1);
+		R->setspeed(R->getEmergency_speed());
+		ERoverList.enqueue(R);
 	}
 	while (Checkup.peek(R) && R->getCheckupEndDate() == CurrentDay)
 	{
